@@ -8,4 +8,8 @@ def test_add():
 
 def test_subtract():
     result = calc("-", 7, 3)
-    assert 4==result
+    assert 4 == result
+
+def test_multiply():
+    result = calc("*", 2, 3)
+    assert 6 == result

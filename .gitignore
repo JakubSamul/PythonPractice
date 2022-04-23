@@ -12,6 +12,7 @@ log.log
 .vscode-test
 .vscode
 __pycache__
+*/__pycache__
 npm-debug.log
 **/.mypy_cache/**
 !yarn.lock
