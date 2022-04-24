@@ -13,3 +13,8 @@ def test_subtract():
 def test_multiply():
     result = calc("*", 2, 3)
     assert 6 == result
+
+def test_divide():
+    for x, y, result in [(4, 2, 2), (3, 2, 1.5), (-12, -4, 3)]:
+        calc_result = calc("/", x, y)
+        assert calc_result == result
