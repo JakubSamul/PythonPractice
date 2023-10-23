@@ -17,7 +17,7 @@ class Crypto:
         self.name = name
     
     def form(self):
-        return f"{self._name} is virtual:
+        return f"{self._name} is virtual"
 
 
 def get_asset_class(asset="gold"):
