@@ -1,6 +1,6 @@
 a = [5,4,1,3,2]
 
-def bubbleSort(a):
+def bubbleSort(a: list) -> list:
     l = len(a)
     while l > 1:
         for i in range(0,l-1):

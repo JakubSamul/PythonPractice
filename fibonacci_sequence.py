@@ -1,4 +1,4 @@
-def fib_seq(n):
+def fib_seq(n: int) -> list:
     a = [1,1]
     c = 0
     if n == 0:
