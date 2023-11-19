@@ -1,11 +1,17 @@
+
 def fib_seq_recurrent(n):
     if n == 0:
-        return 0
+        a = 0
     elif n == 1:
-        return 1
+        a = 1
     else:
-        return fib_seq_recurrent(n-1) + fib_seq_recurrent(n-2)
+        a = fib_seq_recurrent(n-1) + fib_seq_recurrent(n-2)
+    return a
             
-
+def rec(n):
+    result = []
+    for i in range(1,n+1):
+        result.append(fib_seq_recurrent(i))
+    return result
                  
-print(fib_seq_recurrent(6))
+print(rec(10))
