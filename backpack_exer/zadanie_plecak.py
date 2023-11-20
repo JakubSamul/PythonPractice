@@ -5,14 +5,24 @@ class Item:
     weight: int
     value: int
     
-watch = Item(25,75)
-ring = Item(26,90)
-book = Item(51,200)
+watch = Item(3,7)
+bracelet = Item(2,3)
+earrings = Item(1,2)
 
-print(watch, ring, book)
 
-def pack_backpack(items: list[Item], weight):
-     pass
+def pack_backpack(items: list[Item], weight: int) -> int:
+    max_val = 0
+    for i in items:
+        if weight - i.weight < 0:
+            break
+        else:
+            max_val = i.value + pack_backpack([watch, bracelet, earrings], weight-i.weight)
+            print(i.value)
+    return max_val
+        
+
+print(pack_backpack([earrings, bracelet, watch],2))
+     
 
 # def fu(a):
 #     print(a,10)
