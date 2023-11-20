@@ -11,8 +11,8 @@ book = Item(51,200)
 
 print(watch, ring, book)
 
-# # def pack_backpack(items: list[Item], weight):
-# #     pass
+def pack_backpack(items: list[Item], weight):
+     pass
 
 # def fu(a):
 #     print(a,10)
