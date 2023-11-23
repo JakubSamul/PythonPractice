@@ -9,9 +9,16 @@ def fib_seq_recurrent(n: int) -> int:
     return a
             
 def rec(n: int) -> list:
-    result = []
-    for i in range(1,n+1):
-        result.append(fib_seq_recurrent(i))
-    return result
+    # for i in range(1,n+1):
+    #     result.append(fib_seq_recurrent(i))
+    return [ fib_seq_recurrent(i) for i in range(1,n+1) ]
                  
 print(rec(10))
+
+# def a(x):
+#     return f"blabla {x}"
+
+# print([a(i) for i in range(1, 10)])
+
+
+

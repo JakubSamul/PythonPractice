@@ -2,26 +2,41 @@ from dataclasses import dataclass
 
 @dataclass
 class Item:
+    name: str
     weight: int
     value: int
     
-watch = Item(3,7)
-bracelet = Item(2,3)
-earrings = Item(1,2)
+watch = Item('watch',3,7)
+bracelet = Item('bracelet',2,3)
+earrings = Item('earrings',1,2)
 
 
 def pack_backpack(items: list[Item], weight: int) -> int:
     max_val = 0
+    val = []
     for i in items:
         if weight - i.weight < 0:
             break
         else:
-            max_val = i.value + pack_backpack([watch, bracelet, earrings], weight-i.weight)
-            print(i.value)
-    return max_val
+            max_val = i.value + pack_backpack([earrings, bracelet, watch], weight-i.weight)
+            val.append(max_val)
+            print(max(val))
+    print(val)
+    if val:
+        return max(val)
+    else:
+        return 0
         
 
-print(pack_backpack([earrings, bracelet, watch],2))
+print(pack_backpack([earrings, bracelet, watch],5))
+
+def test(packed: list[Item], avaliable: list[Item], size: int) -> list[Item]:
+    for item in avaliable:
+        if item.weight <= size:
+            return test(packed + [item], avaliable, size - item.weight)
+    return packed
+
+print(test([], [earrings, bracelet, watch], 10))
      
 
 # def fu(a):
