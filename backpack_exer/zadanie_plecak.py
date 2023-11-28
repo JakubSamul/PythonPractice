@@ -11,32 +11,27 @@ bracelet = Item('bracelet',2,3)
 earrings = Item('earrings',1,2)
 
 
-def pack_backpack(items: list[Item], weight: int) -> int:
-    max_val = 0
-    val = []
+def pack_backpack(packed: [], items: list[Item], weight: int) -> int:
+    result = []
     for i in items:
         if weight - i.weight < 0:
+            result += packed
+            print(result)
             break
         else:
-            max_val = i.value + pack_backpack([earrings, bracelet, watch], weight-i.weight)
-            val.append(max_val)
-            print(max(val))
-    print(val)
-    if val:
-        return max(val)
-    else:
-        return 0
+            pack_backpack(packed + [i.name, i.value], items, weight-i.weight)
+
         
 
-print(pack_backpack([earrings, bracelet, watch],5))
+print(pack_backpack([], [earrings, bracelet, watch], 3))
 
-def test(packed: list[Item], avaliable: list[Item], size: int) -> list[Item]:
-    for item in avaliable:
-        if item.weight <= size:
-            return test(packed + [item], avaliable, size - item.weight)
-    return packed
+# def test(packed: list[Item], avaliable: list[Item], size: int) -> list[Item]:
+#     for item in avaliable:
+#         if item.weight <= size:
+#             return test(packed + [item], avaliable, size - item.weight)
+#     return packed
 
-print(test([], [earrings, bracelet, watch], 10))
+# # print(test([], [earrings, bracelet, watch], 10))
      
 
 # def fu(a):
