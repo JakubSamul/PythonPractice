@@ -11,19 +11,24 @@ bracelet = Item('bracelet',2,3)
 earrings = Item('earrings',1,2)
 
 
-def pack_backpack(packed: [], items: list[Item], weight: int) -> int:
-    result = []
+def pack_backpack(finish: [],thing: [], result: [], packed: [], items: list[Item], weight: int) -> str:
+    print('pack_backpack')
     for i in items:
+        print(i)
         if weight - i.weight < 0:
-            result += packed
-            print(result)
+            if len(result) < 1:
+                result += [packed]
+                finish += [thing]
+            elif len(result) == 1:
+                if sum(result[0]) < sum(packed):
+                    result[0] = packed
+                    finish[0] = thing
             break
         else:
-            pack_backpack(packed + [i.name, i.value], items, weight-i.weight)
+            pack_backpack(finish, thing + [i.name], result, packed + [i.value], items, weight-i.weight)
+    return 'Musisz spakować ' + str(finish[0]) + ' plecak będzie miał wtedy wartość ' + str(sum(result[0]))
 
-        
-
-print(pack_backpack([], [earrings, bracelet, watch], 3))
+print(pack_backpack([], [], [], [], [earrings, bracelet, watch], 25))
 
 # def test(packed: list[Item], avaliable: list[Item], size: int) -> list[Item]:
 #     for item in avaliable:
