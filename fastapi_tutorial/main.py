@@ -197,43 +197,92 @@ app = FastAPI()
 #     return result
 
 # Part 9 -> Body -> Nasted Models
-class Image(BaseModel):
-    url: HttpUrl
-    name: str
+# class Image(BaseModel):
+#     url: HttpUrl
+#     name: str
 
 
+# class Item(BaseModel):
+#     name: str
+#     description: str | None = None
+#     price: float
+#     tax: float | None = None
+#     tags: set[str] = []
+#     image: Image | None = None
+
+
+# class Offer(BaseModel):
+#     name: str
+#     description: str | None = None
+#     price: float
+#     item: list[Item]
+
+
+# @app.put("/items/{item_id}")
+# async def update_item(item_id: int, item: Item):
+#     result = {"item_id": item_id, "item": item}
+#     return result
+
+
+# @app.post("/offers")
+# async def cretae_offer(offer: Offer = Body(..., embed=True)):
+#     return offer
+
+
+# @app.post("/images/multiple")
+# async def create_multiple_images(images: list[Image]):
+#     return images
+
+
+# @app.post("/blah")
+# async def create_some_blahs(blahs: dict[int, float]):
+#     return blahs
+
+#  Part 10 -> Declare Request Example Data
 class Item(BaseModel):
     name: str
     description: str | None = None
     price: float
     tax: float | None = None
-    tags: set[str] = []
-    image: Image | None = None
 
-
-class Offer(BaseModel):
-    name: str
-    description: str | None = None
-    price: float
-    item: list[Item]
+    # class Confg:
+    #     schema_extra = {
+    #         "example": {
+    #             "name": "foo",
+    #             "description": "A very nice item",
+    #             "price": 16.25,
+    #             "tax": 1.67,
+    #         }
+    #     }
 
 
 @app.put("/items/{item_id}")
-async def update_item(item_id: int, item: Item):
+async def update_item(
+    item_id: int, 
+    item: Item = Body(
+        ...,
+        examples={
+            "normal": {
+                "summary": "A normal example",
+                "description": "A normal item work correctly",
+                "value": {
+                    "name": "Foo",
+                    "description": "This is a nice item",
+                    "price": 16.25,
+                    "tax": 1.67,
+                },
+            },
+            "converted": {
+                "summary": "An example with converted data",
+                "description": "FastAPI can convert price 'string' to actual 'number'",
+                "value": {"name": "Bar", "price": "16.25"},
+            },
+            "invalid": {
+                "summary": "Invalid data is rejected with an error",
+                "value": {"name": "Baz", "price": "sixteen point two five"},
+            },
+        },
+    ),
+):
     result = {"item_id": item_id, "item": item}
     return result
-
-
-@app.post("/offers")
-async def cretae_offer(offer: Offer = Body(..., embed=True)):
-    return offer
-
-
-@app.post("/images/multiple")
-async def create_multiple_images(images: list[Image]):
-    return images
-
-
-@app.post("/blah")
-async def create_some_blahs(blahs: dict[int, float]):
-    return blahs
