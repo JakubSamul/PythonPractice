@@ -26,7 +26,9 @@ p_start = SignalPoint(10, 19)
 p_end = SignalPoint(19, 14)
 
 
-def whether_the_transmitters_are_within_range(transmiter1, transmiter2) -> bool:
+def whether_the_transmitters_are_within_range(
+    transmiter1: Transmiter, transmiter2: Transmiter
+) -> bool:
     length_centre = (
         (transmiter2.coordinate_x - transmiter1.coordinate_x) ** 2
         + (transmiter2.coordinate_y - transmiter1.coordinate_y) ** 2
@@ -35,7 +37,9 @@ def whether_the_transmitters_are_within_range(transmiter1, transmiter2) -> bool:
     return length_centre <= length_r
 
 
-def whether_the_point_is_within_the_range_of_the_transmitter(transmiter, point) -> bool:
+def whether_the_point_is_within_the_range_of_the_transmitter(
+    transmiter: Transmiter, point: SignalPoint
+) -> bool:
     length_centre = (
         (transmiter.coordinate_x - point.coordinate_x) ** 2
         + (transmiter.coordinate_y - point.coordinate_y) ** 2
@@ -44,7 +48,7 @@ def whether_the_point_is_within_the_range_of_the_transmitter(transmiter, point) 
 
 
 def whether_the_signal_will_reach_its_destination(
-    start_point, end_point, transmiters: list
+    start_point: SignalPoint, end_point: SignalPoint, transmiters: list
 ) -> bool:
     p_end_transmiters = []
     connection_transmiters = []
