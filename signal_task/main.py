@@ -62,7 +62,7 @@ def whether_the_signal_will_reach_its_destination(
             p_end_transmiters.append(i)
 
     for z in connection_transmiters:
-        for i in all_transmiters:
+        for i in transmiters:
             if i in connection_transmiters:
                 continue
             elif whether_the_transmitters_are_within_range(z, i):
