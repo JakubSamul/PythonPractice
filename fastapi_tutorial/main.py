@@ -3,7 +3,7 @@ from enum import Enum
 from typing import Literal, Union
 from uuid import UUID
 
-from fastapi import Cookie, FastAPI, Header, Query, Path, Body, status
+from fastapi import Cookie, FastAPI, Form, Header, Query, Path, Body, status
 from pydantic import BaseModel, EmailStr, Field, HttpUrl
 
 app = FastAPI()
@@ -476,3 +476,17 @@ app = FastAPI()
 # @app.get("/item/", status_code=status.HTTP_302_FOUND)
 # async def read_items_redirect():
 #     return {"hello": "world"}
+
+
+
+#  16 - From Fields
+# @app.post("/login/")
+# async def login(username: str = Form(...), password: str = Form(...)):
+#     print("password", password)
+#     return {"username": username}
+
+
+# @app.post("/login-json/")
+# async def login_json(username: str = Body(...), password: str = Body(...)):
+#     print("password", password)
+#     return {"username": username}
