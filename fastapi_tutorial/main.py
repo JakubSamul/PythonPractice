@@ -3,7 +3,7 @@ from enum import Enum
 from typing import Literal, Union
 from uuid import UUID
 
-from fastapi import Cookie, FastAPI, Form, Header, Query, Path, Body, status
+from fastapi import Cookie, FastAPI, Form, Header, Query, Path, Body, status, File, UploadFile
 from pydantic import BaseModel, EmailStr, Field, HttpUrl
 
 app = FastAPI()
@@ -490,3 +490,13 @@ app = FastAPI()
 # async def login_json(username: str = Body(...), password: str = Body(...)):
 #     print("password", password)
 #     return {"username": username}
+
+
+# 17 - Request Files
+@app.post("/files/")
+async def create_file(files: list[bytes] = File(..., description="A file read as bytes")):
+    return {"file_size": [len(file) for file in files]}
+
+@app.post("/uploadfiles/")
+async def create_upload_file(files: list[UploadFile] = File(..., description="A file read as UploadFile")):
+    return {"filename": [file.filename for file in files]}
