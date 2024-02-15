@@ -493,10 +493,21 @@ app = FastAPI()
 
 
 # 17 - Request Files
-@app.post("/files/")
-async def create_file(files: list[bytes] = File(..., description="A file read as bytes")):
-    return {"file_size": [len(file) for file in files]}
+# @app.post("/files/")
+# async def create_file(files: list[bytes] = File(..., description="A file read as bytes")):
+#     return {"file_size": [len(file) for file in files]}
 
-@app.post("/uploadfiles/")
-async def create_upload_file(files: list[UploadFile] = File(..., description="A file read as UploadFile")):
-    return {"filename": [file.filename for file in files]}
+# @app.post("/uploadfiles/")
+# async def create_upload_file(files: list[UploadFile] = File(..., description="A file read as UploadFile")):
+#     return {"filename": [file.filename for file in files]}
+
+
+# 18 - Request Forms and Files
+@app.post("/files/")
+async def create_file(file: bytes = File(...), fileb: UploadFile = File(...), token: str = Form(...), hello: str = Body(...)):
+    return {
+        "file_size": len(file),
+        "token": token,
+        "fileb_content_type": fileb.content_type,
+        "hello": hello,
+    }
