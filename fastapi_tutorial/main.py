@@ -27,6 +27,8 @@ from fastapi.exception_handlers import (
 from fastapi.responses import JSONResponse, PlainTextResponse
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from pydantic import BaseModel, EmailStr, Field, HttpUrl
+from passlib.context import CryptContext
+from jose import jwt, JWTError
 from starlette.exceptions import HTTPException as StarletteHTTPException
 from starlette.responses import HTMLResponse
 
@@ -879,4 +881,79 @@ app = FastAPI()
 #     return current_user
 
 
-#  27 - 
+#  27 - Security, OAuth2 Bearer and JWT
+SECRET_KEY = 'thequickbrownfoxjumpsoverthelazydog'
+ALGOTITHM = 'HS256'
+ACCES_TOKEN_EXPIRE_MINUTES = 30
+
+fake_users_db = dict(
+    johndoe = dict(
+        username='johndoe',
+        full_name='John Doe',
+        email='johndoe@example.com',
+        hashed_password='',
+        disable=False,
+    )
+)
+
+class Token(BaseModel):
+    access_token: str
+    token_type: str
+
+class TokenData(BaseModel):
+    usrtname: str | None = None
+
+class User(BaseModel):
+    usrname: str
+    email: str | None = None
+    full_name: str | None = None
+    disable: bool = False
+
+class UserInDB(User):
+    hashed_password: str
+
+pwd_context = CryptContext(schemes=['bcrypto'], deprecated='auto')
+
+aquth2_scheme = OAuth2PasswordBearer(tokenUrl='token')
+
+def verify_password(plain_password, hashed_password):
+    return pwd_context.verify(plain_password, hashed_password)
+
+def get_password_hash(password):
+    return pwd_context.hash(password)
+
+def get_user(db, username: str):
+    if username in db:
+        user_dict = db[username]
+        return UserInDB(**user_dict)
+    
+def authenticate_user(fake_db, username: str, password: str):
+    user = get_user(fake_db, username)
+    if not user:
+        return False
+    if not verify_password(password, user.hashed_password):
+        return False
+    return user
+
+def create_acccess_token(data: dict, expires_delta: timedelta | None = None):
+    to_encode = data.copy()
+    if expires_delta:
+        expire = datetime.utcnow() + expires_delta
+    else:
+        expire = datetime.utcnow() + timedelta(minutes=15)
+    to_encode.update({'exp': expire})
+    encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGOTITHM)
+    return encoded_jwt
+
+@app.post('/token', response_model=Token)
+async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends()):
+    user = authenticate_user(fake_users_db, form_data.username, form_data.password)
+    if not user:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail='Incorrect username or password',
+            headers={'WWW-Authenticate': 'Bearer'}
+        )
+    access_token_expires = timedelta(minutes=ACCES_TOKEN_EXPIRE_MINUTES)
+    access_token = create_acccess_token(data={'sub': user.usrname}, expires_delta=access_token_expires)
+    return {'access_token': access_token, 'token_type': 'bearer'}
