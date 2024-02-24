@@ -914,7 +914,7 @@ class UserInDB(User):
 
 pwd_context = CryptContext(schemes=['bcrypto'], deprecated='auto')
 
-aquth2_scheme = OAuth2PasswordBearer(tokenUrl='token')
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl='token')
 
 def verify_password(plain_password, hashed_password):
     return pwd_context.verify(plain_password, hashed_password)
@@ -957,3 +957,35 @@ async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(
     access_token_expires = timedelta(minutes=ACCES_TOKEN_EXPIRE_MINUTES)
     access_token = create_acccess_token(data={'sub': user.usrname}, expires_delta=access_token_expires)
     return {'access_token': access_token, 'token_type': 'bearer'}
+
+async def get_current_user(token: str = Depends(oauth2_scheme)):
+    credentials_expection = HTTPException(
+        status_code=status.HTTP_401_UNAUTHORIZED,
+        detail='Could not validate credentials',
+        headers={'WWW-Authenticate': 'Bearer'},
+    )
+    try:
+        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGOTITHM])
+        username: str = payload('syb')
+        if username in None:
+            raise credentials_expection
+        token_data = TokenData(username=username)
+    except JWTError:
+        raise credentials_expection
+    user = get_user(fake_users_db, username=token_data.usrtname)
+    if user is None:
+        raise credentials_expection
+    return user
+
+async def get_current_activate_user(current_user: User = Depends(get_current_user)):
+    if current_user.disable:
+        raise HTTPException(status_code=400, detail='Inactive User')
+    return current_user
+
+@app.get('/users/me', response_model=User)
+async def get_me(current_user: User = Depends(get_current_activate_user)):
+    return current_user
+
+@app.get('/users/me/items')
+async def read_own_items(current_user: User = Depends(get_current_activate_user)):
+    return [{'item_id': 'Foo', 'owner': current_user.usrname}]
