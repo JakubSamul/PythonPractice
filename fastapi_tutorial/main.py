@@ -26,11 +26,13 @@ from fastapi.exception_handlers import (
 )
 from fastapi.responses import JSONResponse, PlainTextResponse
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, EmailStr, Field, HttpUrl
 from passlib.context import CryptContext
 from jose import jwt, JWTError
 from starlette.exceptions import HTTPException as StarletteHTTPException
 from starlette.responses import HTMLResponse
+from starlette.middleware.base import BaseHTTPMiddleware
 
 app = FastAPI()
 
@@ -882,110 +884,128 @@ app = FastAPI()
 
 
 #  27 - Security, OAuth2 Bearer and JWT
-SECRET_KEY = 'thequickbrownfoxjumpsoverthelazydog'
-ALGOTITHM = 'HS256'
-ACCES_TOKEN_EXPIRE_MINUTES = 30
+# SECRET_KEY = 'thequickbrownfoxjumpsoverthelazydog'
+# ALGOTITHM = 'HS256'
+# ACCES_TOKEN_EXPIRE_MINUTES = 30
 
-fake_users_db = dict(
-    johndoe = dict(
-        username='johndoe',
-        full_name='John Doe',
-        email='johndoe@example.com',
-        hashed_password='',
-        disable=False,
-    )
-)
+# fake_users_db = dict(
+#     johndoe = dict(
+#         username='johndoe',
+#         full_name='John Doe',
+#         email='johndoe@example.com',
+#         hashed_password='',
+#         disable=False,
+#     )
+# )
 
-class Token(BaseModel):
-    access_token: str
-    token_type: str
+# class Token(BaseModel):
+#     access_token: str
+#     token_type: str
 
-class TokenData(BaseModel):
-    usrtname: str | None = None
+# class TokenData(BaseModel):
+#     usrtname: str | None = None
 
-class User(BaseModel):
-    usrname: str
-    email: str | None = None
-    full_name: str | None = None
-    disable: bool = False
+# class User(BaseModel):
+#     usrname: str
+#     email: str | None = None
+#     full_name: str | None = None
+#     disable: bool = False
 
-class UserInDB(User):
-    hashed_password: str
+# class UserInDB(User):
+#     hashed_password: str
 
-pwd_context = CryptContext(schemes=['bcrypto'], deprecated='auto')
+# pwd_context = CryptContext(schemes=['bcrypto'], deprecated='auto')
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl='token')
+# oauth2_scheme = OAuth2PasswordBearer(tokenUrl='token')
 
-def verify_password(plain_password, hashed_password):
-    return pwd_context.verify(plain_password, hashed_password)
+# def verify_password(plain_password, hashed_password):
+#     return pwd_context.verify(plain_password, hashed_password)
 
-def get_password_hash(password):
-    return pwd_context.hash(password)
+# def get_password_hash(password):
+#     return pwd_context.hash(password)
 
-def get_user(db, username: str):
-    if username in db:
-        user_dict = db[username]
-        return UserInDB(**user_dict)
+# def get_user(db, username: str):
+#     if username in db:
+#         user_dict = db[username]
+#         return UserInDB(**user_dict)
     
-def authenticate_user(fake_db, username: str, password: str):
-    user = get_user(fake_db, username)
-    if not user:
-        return False
-    if not verify_password(password, user.hashed_password):
-        return False
-    return user
+# def authenticate_user(fake_db, username: str, password: str):
+#     user = get_user(fake_db, username)
+#     if not user:
+#         return False
+#     if not verify_password(password, user.hashed_password):
+#         return False
+#     return user
 
-def create_acccess_token(data: dict, expires_delta: timedelta | None = None):
-    to_encode = data.copy()
-    if expires_delta:
-        expire = datetime.utcnow() + expires_delta
-    else:
-        expire = datetime.utcnow() + timedelta(minutes=15)
-    to_encode.update({'exp': expire})
-    encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGOTITHM)
-    return encoded_jwt
+# def create_acccess_token(data: dict, expires_delta: timedelta | None = None):
+#     to_encode = data.copy()
+#     if expires_delta:
+#         expire = datetime.utcnow() + expires_delta
+#     else:
+#         expire = datetime.utcnow() + timedelta(minutes=15)
+#     to_encode.update({'exp': expire})
+#     encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGOTITHM)
+#     return encoded_jwt
 
-@app.post('/token', response_model=Token)
-async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends()):
-    user = authenticate_user(fake_users_db, form_data.username, form_data.password)
-    if not user:
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail='Incorrect username or password',
-            headers={'WWW-Authenticate': 'Bearer'}
-        )
-    access_token_expires = timedelta(minutes=ACCES_TOKEN_EXPIRE_MINUTES)
-    access_token = create_acccess_token(data={'sub': user.usrname}, expires_delta=access_token_expires)
-    return {'access_token': access_token, 'token_type': 'bearer'}
+# @app.post('/token', response_model=Token)
+# async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends()):
+#     user = authenticate_user(fake_users_db, form_data.username, form_data.password)
+#     if not user:
+#         raise HTTPException(
+#             status_code=status.HTTP_401_UNAUTHORIZED,
+#             detail='Incorrect username or password',
+#             headers={'WWW-Authenticate': 'Bearer'}
+#         )
+#     access_token_expires = timedelta(minutes=ACCES_TOKEN_EXPIRE_MINUTES)
+#     access_token = create_acccess_token(data={'sub': user.usrname}, expires_delta=access_token_expires)
+#     return {'access_token': access_token, 'token_type': 'bearer'}
 
-async def get_current_user(token: str = Depends(oauth2_scheme)):
-    credentials_expection = HTTPException(
-        status_code=status.HTTP_401_UNAUTHORIZED,
-        detail='Could not validate credentials',
-        headers={'WWW-Authenticate': 'Bearer'},
-    )
-    try:
-        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGOTITHM])
-        username: str = payload('syb')
-        if username in None:
-            raise credentials_expection
-        token_data = TokenData(username=username)
-    except JWTError:
-        raise credentials_expection
-    user = get_user(fake_users_db, username=token_data.usrtname)
-    if user is None:
-        raise credentials_expection
-    return user
+# async def get_current_user(token: str = Depends(oauth2_scheme)):
+#     credentials_expection = HTTPException(
+#         status_code=status.HTTP_401_UNAUTHORIZED,
+#         detail='Could not validate credentials',
+#         headers={'WWW-Authenticate': 'Bearer'},
+#     )
+#     try:
+#         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGOTITHM])
+#         username: str = payload('syb')
+#         if username in None:
+#             raise credentials_expection
+#         token_data = TokenData(username=username)
+#     except JWTError:
+#         raise credentials_expection
+#     user = get_user(fake_users_db, username=token_data.usrtname)
+#     if user is None:
+#         raise credentials_expection
+#     return user
 
-async def get_current_activate_user(current_user: User = Depends(get_current_user)):
-    if current_user.disable:
-        raise HTTPException(status_code=400, detail='Inactive User')
-    return current_user
+# async def get_current_activate_user(current_user: User = Depends(get_current_user)):
+#     if current_user.disable:
+#         raise HTTPException(status_code=400, detail='Inactive User')
+#     return current_user
 
-@app.get('/users/me', response_model=User)
-async def get_me(current_user: User = Depends(get_current_activate_user)):
-    return current_user
+# @app.get('/users/me', response_model=User)
+# async def get_me(current_user: User = Depends(get_current_activate_user)):
+#     return current_user
 
-@app.get('/users/me/items')
-async def read_own_items(current_user: User = Depends(get_current_activate_user)):
-    return [{'item_id': 'Foo', 'owner': current_user.usrname}]
+# @app.get('/users/me/items')
+# async def read_own_items(current_user: User = Depends(get_current_activate_user)):
+#     return [{'item_id': 'Foo', 'owner': current_user.usrname}]
+
+
+# 28 - Middleware and CORS
+class MyMiddlewere(BaseHTTPMiddleware):
+    async def dispatch(self, request: Request, call_next):
+        start_time = time.time()
+        response = await call_next(request)
+        process_time = time.time() - start_time
+        response.headers['X-Process-Time'] = str(process_time)
+        return response
+    
+origin = ['http://localhost:8000', 'http://localhost:3000']
+app.add_middleware(MyMiddlewere)
+app.add_middleware(CORSMiddleware, allow_origins=origin)
+
+@app.get('/blah')
+async def blah():
+    return {'hello': 'world'}
