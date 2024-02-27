@@ -701,7 +701,7 @@ app = FastAPI()
 #     return items.get(item_id)
 
 
-# @app.put("/items/{id}", response_model=Item)
+# @app.put("/items/{item_id}", response_model=Item)
 # def update_item(item_id: str, item: Item):
 #     update_item_encoded = jsonable_encoder(item)
 #     items[item_id] = update_item_encoded
@@ -994,18 +994,18 @@ app = FastAPI()
 
 
 # 28 - Middleware and CORS
-class MyMiddlewere(BaseHTTPMiddleware):
-    async def dispatch(self, request: Request, call_next):
-        start_time = time.time()
-        response = await call_next(request)
-        process_time = time.time() - start_time
-        response.headers['X-Process-Time'] = str(process_time)
-        return response
+# class MyMiddlewere(BaseHTTPMiddleware):
+#     async def dispatch(self, request: Request, call_next):
+#         start_time = time.time()
+#         response = await call_next(request)
+#         process_time = time.time() - start_time
+#         response.headers['X-Process-Time'] = str(process_time)
+#         return response
     
-origin = ['http://localhost:8000', 'http://localhost:3000']
-app.add_middleware(MyMiddlewere)
-app.add_middleware(CORSMiddleware, allow_origins=origin)
+# origin = ['http://localhost:8000', 'http://localhost:3000']
+# app.add_middleware(MyMiddlewere)
+# app.add_middleware(CORSMiddleware, allow_origins=origin)
 
-@app.get('/blah')
-async def blah():
-    return {'hello': 'world'}
+# @app.get('/blah')
+# async def blah():
+#     return {'hello': 'world'}
