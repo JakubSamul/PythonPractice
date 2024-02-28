@@ -7,11 +7,22 @@ from pydantic import BaseModel
 card = FastAPI()
 
 
+class Card(BaseModel):
+    cards: list[str] = [
+        'k', 'k', 'k', 'k', 'k', 'k', 'k', 'k', 'k', 'k', 'k', 'k', 'k', 'k', 'k', 'k', 'k', 'k', 'k', 'k',
+        'vp', 'vp', 'vp', 'vp', 'vp', 'v', 'v', 'v', 'br', 'br', 'br', 'm', 'm', 'm'
+    ]
+
+
 class Player(BaseModel):
     name: str | None = None
     card: list[str] | None = None
 
+
 players = {}
+
+def grab_card(player_id: int, card: Card):
+    pass
 
 @card.get("/get_player/{player_id}")
 async def read_player(player_id: int):
@@ -23,15 +34,3 @@ async def create_player(player_id: int, player: Player):
     players[player_id] = player
     return players[player_id]
 
-
-# @card.patch("/players/{player_id}", response_model=Player)
-# async def patch_player(player_id: int, player: Player):
-#     stored_player_data = players[player_id]
-#     if stored_player_data is not None:
-#         stored_player_model = Player(**stored_player_data)
-#     else:
-#         stored_player_model = Player()
-#     update_data = player.dict(exclude_unset=True)
-#     updated_player = stored_player_model.copy(update=update_data)
-#     players[player_id] = jsonable_encoder(updated_player)
-#     return updated_player
