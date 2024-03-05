@@ -1,6 +1,4 @@
-from enum import Enum
-from fastapi import FastAPI, Path, Query
-from fastapi.encoders import jsonable_encoder
+from fastapi import FastAPI
 from pydantic import BaseModel
 import random
 
@@ -16,18 +14,10 @@ list_of_vc = [
 
 class Player(BaseModel):
     name: str | None = None
-    cards: list[str] | None = []
+    cards: list[str] = []
 
 
 players = {}
-
-
-def t_card():
-    take = random.choice(list_of_vc)
-    list_of_vc.remove(take)
-    return take
-
-print(t_card())
 
 
 @card.post("/create_player/{player_id}")
@@ -36,13 +26,23 @@ async def create_player(player_id: int, player: Player):
     return players[player_id]
 
 
+@card.get("/get_VCard")
+async def read_vcards():
+    return list_of_vc
+
+
 @card.get("/get_player/{player_id}")
 async def read_player(player_id: int):
     return players.get(player_id)
 
 
-@card.put('/grab_card/{player_id}')
+@card.post('/grab_card/{player_id}')
 async def grab_card(player_id: int):
     player = players[player_id]
-    player.cards = [t_card]
+    if len(list_of_vc) == 0:
+        return "Brak kard rozwoju"
+    else:
+        take = random.choice(list_of_vc)
+        list_of_vc.remove(take)
+        player.cards.append(take)
     return player
