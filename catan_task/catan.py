@@ -1,6 +1,6 @@
 import random
 
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 
 card = FastAPI()
@@ -72,7 +72,7 @@ async def read_player(player_id: int):
 async def grab_card(player_id: int):
     player = players[player_id]
     if len(list_of_vc) == 0:
-        return "Brak kard rozwoju"
+        raise HTTPException(status_code=404, detail="Brak kart rozwoju")
     else:
         take = random.choice(list_of_vc)
         list_of_vc.remove(take)
