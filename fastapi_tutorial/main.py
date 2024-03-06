@@ -4,35 +4,35 @@ from typing import Literal, Union
 from uuid import UUID
 
 from fastapi import (
+    Body,
     Cookie,
     Depends,
     FastAPI,
+    File,
     Form,
     Header,
-    Query,
-    Path,
-    Body,
-    status,
-    File,
-    UploadFile,
     HTTPException,
+    Path,
+    Query,
     Request,
+    UploadFile,
+    status,
 )
 from fastapi.encoders import jsonable_encoder
-from fastapi.exceptions import RequestValidationError
 from fastapi.exception_handlers import (
     http_exception_handler,
     request_validation_exception_handler,
 )
+from fastapi.exceptions import RequestValidationError
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse, PlainTextResponse
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
-from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel, EmailStr, Field, HttpUrl
+from jose import JWTError, jwt
 from passlib.context import CryptContext
-from jose import jwt, JWTError
+from pydantic import BaseModel, EmailStr, Field, HttpUrl
 from starlette.exceptions import HTTPException as StarletteHTTPException
-from starlette.responses import HTMLResponse
 from starlette.middleware.base import BaseHTTPMiddleware
+from starlette.responses import HTMLResponse
 
 app = FastAPI()
 
@@ -752,7 +752,7 @@ app = FastAPI()
 #         self.skip = skip
 #         self.limit = limit
 
-    
+
 # @app.get('/items/{item_id}')
 # async def read_items(commons: ComonQueryParams = Depends()):
 #     response = {}
@@ -760,12 +760,12 @@ app = FastAPI()
 #         response.update({'q': commons.q})
 #     items = fake_items_db[commons.skip: commons.skip + commons.limit]
 #     response.update({'items': items})
-#     return response 
+#     return response
 
 
 # 24 - Sub-Dependencies
 # def query_extractor(q: str | None = None):
-#     return q 
+#     return q
 
 
 # def query_or_body_extractor(q: str = Depends(query_extractor), last_query: str | None = Body(None)):
@@ -783,7 +783,7 @@ app = FastAPI()
 # async def verify_token(x_token: str = Header(...)):
 #     if x_token != 'fake-super-secret-token':
 #         raise HTTPException(status_code=400, detail='X-Token header invalid')
-    
+
 
 # async def verify_key(x_key: str = Header(...)):
 #     if x_key != 'fake-super-secret-key':
@@ -844,7 +844,7 @@ app = FastAPI()
 #     if username in db:
 #         user_dict = db[username]
 #         return UserInDB(**user_dict)
-    
+
 
 # def fake_decode_token(token):
 #     return get_user(fake_users_db, token)
@@ -928,7 +928,7 @@ app = FastAPI()
 #     if username in db:
 #         user_dict = db[username]
 #         return UserInDB(**user_dict)
-    
+
 # def authenticate_user(fake_db, username: str, password: str):
 #     user = get_user(fake_db, username)
 #     if not user:
@@ -1001,7 +1001,7 @@ app = FastAPI()
 #         process_time = time.time() - start_time
 #         response.headers['X-Process-Time'] = str(process_time)
 #         return response
-    
+
 # origin = ['http://localhost:8000', 'http://localhost:3000']
 # app.add_middleware(MyMiddlewere)
 # app.add_middleware(CORSMiddleware, allow_origins=origin)
