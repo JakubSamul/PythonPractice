@@ -1,15 +1,47 @@
-from fastapi import FastAPI
-from pydantic import BaseModel
 import random
 
+from fastapi import FastAPI
+from pydantic import BaseModel
 
 card = FastAPI()
 
 
 list_of_vc = [
-        'k', 'k', 'k', 'k', 'k', 'k', 'k', 'k', 'k', 'k', 'k', 'k', 'k', 'k', 'k', 'k', 'k', 'k', 'k', 'k',
-        'vp', 'vp', 'vp', 'vp', 'vp', 'v', 'v', 'v', 'br', 'br', 'br', 'm', 'm', 'm'
-    ]
+    "k",
+    "k",
+    "k",
+    "k",
+    "k",
+    "k",
+    "k",
+    "k",
+    "k",
+    "k",
+    "k",
+    "k",
+    "k",
+    "k",
+    "k",
+    "k",
+    "k",
+    "k",
+    "k",
+    "k",
+    "vp",
+    "vp",
+    "vp",
+    "vp",
+    "vp",
+    "v",
+    "v",
+    "v",
+    "br",
+    "br",
+    "br",
+    "m",
+    "m",
+    "m",
+]
 
 
 class Player(BaseModel):
@@ -36,7 +68,7 @@ async def read_player(player_id: int):
     return players.get(player_id)
 
 
-@card.post('/grab_card/{player_id}')
+@card.post("/grab_card/{player_id}")
 async def grab_card(player_id: int):
     player = players[player_id]
     if len(list_of_vc) == 0:
