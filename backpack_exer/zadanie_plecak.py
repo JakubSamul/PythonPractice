@@ -1,18 +1,22 @@
 from dataclasses import dataclass
 
+
 @dataclass
 class Item:
     name: str
     weight: int
     value: int
-    
-watch = Item('watch',3,7)
-bracelet = Item('bracelet',2,3)
-earrings = Item('earrings',1,2)
 
 
-def pack_backpack(finish: [],thing: [], result: [], packed: [], items: list[Item], weight: int) -> str:
-    print('pack_backpack')
+watch = Item("watch", 3, 7)
+bracelet = Item("bracelet", 2, 3)
+earrings = Item("earrings", 1, 2)
+
+
+def pack_backpack(
+    finish: [], thing: [], result: [], packed: [], items: list[Item], weight: int
+) -> str:
+    print("pack_backpack")
     for i in items:
         print(i)
         if weight - i.weight < 0:
@@ -25,8 +29,21 @@ def pack_backpack(finish: [],thing: [], result: [], packed: [], items: list[Item
                     finish[0] = thing
             break
         else:
-            pack_backpack(finish, thing + [i.name], result, packed + [i.value], items, weight-i.weight)
-    return 'Musisz spakować ' + str(finish[0]) + ' plecak będzie miał wtedy wartość ' + str(sum(result[0]))
+            pack_backpack(
+                finish,
+                thing + [i.name],
+                result,
+                packed + [i.value],
+                items,
+                weight - i.weight,
+            )
+    return (
+        "Musisz spakować "
+        + str(finish[0])
+        + " plecak będzie miał wtedy wartość "
+        + str(sum(result[0]))
+    )
+
 
 print(pack_backpack([], [], [], [], [earrings, bracelet, watch], 25))
 
@@ -37,12 +54,12 @@ print(pack_backpack([], [], [], [], [earrings, bracelet, watch], 25))
 #     return packed
 
 # # print(test([], [earrings, bracelet, watch], 10))
-     
+
 
 # def fu(a):
 #     print(a,10)
 #     if a <= 0:
-#         return 0 
+#         return 0
 #     else:
 #         return 10 + fu(a-1)
 # # a = 5 w 10 = w4
@@ -54,10 +71,9 @@ print(pack_backpack([], [], [], [], [earrings, bracelet, watch], 25))
 
 # def suma(a):
 #     if a < 0:
-#         return 0 
+#         return 0
 #     else:
 #         return a + suma(a-1)
 
 # print(suma(5))
-    # 0+1+2+3+4+5   5+4+3+2+1+0
-
+# 0+1+2+3+4+5   5+4+3+2+1+0
