@@ -1,7 +1,12 @@
+function MainContent() {
+    return (
+        <h1>I'm learning React!</h1>
+    )
+}
+
 ReactDOM.render(
-    <ul>
-        <li>more</li>
-        <li>moree</li>
-    </ul>, 
+    <div>
+        <MainContent />
+    </div>, 
     document.getElementById("root")
 )
