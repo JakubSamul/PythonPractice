@@ -104,56 +104,75 @@ import numpy as np
 # print(a)
 
 
-# Mathematics
+# # Mathematics
 
-a = np.array([1, 2, 3, 4])
+# a = np.array([1, 2, 3, 4])
 
 
-a + 2
+# a + 2
 
-a - 2
+# a - 2
 
-a * 2
+# a * 2
 
-a / 2
+# a / 2
 
-b = np.array([1, 0, 1, 0])
-a + b
+# b = np.array([1, 0, 1, 0])
+# a + b
 
-a**2
+# a**2
 
-# Take the sin
-np.sin(a)
+# # Take the sin
+# np.sin(a)
 
-# For a lot more (https://docs.scipy.org/doc/numpy/reference/routines.math.html)
+# # For a lot more (https://docs.scipy.org/doc/numpy/reference/routines.math.html)
 
-# Linear Algebra
-a = np.ones((2, 3))
-print(a)
+# # Linear Algebra
+# a = np.ones((2, 3))
+# print(a)
 
-b = np.full((3, 2), 2)
-print(b)
+# b = np.full((3, 2), 2)
+# print(b)
 
-np.matmul(a, b)
+# np.matmul(a, b)
 
-# Find the determinant
-c = np.identity(3)
-np.linalg.det(c)
+# # Find the determinant
+# c = np.identity(3)
+# np.linalg.det(c)
 
-## Reference docs (https://docs.scipy.org/doc/numpy/reference/routines.linalg.html)
+# ## Reference docs (https://docs.scipy.org/doc/numpy/reference/routines.linalg.html)
 
-# Determinant
-# Trace
-# Singular Vector Decomposition
-# Eigenvalues
-# Matrix Norm
-# Inverse
-# Etc...
-# Statistics
-stats = np.array([[1, 2, 3], [4, 5, 6]])
+# # Determinant
+# # Trace
+# # Singular Vector Decomposition
+# # Eigenvalues
+# # Matrix Norm
+# # Inverse
+# # Etc...
+# # Statistics
+# stats = np.array([[1, 2, 3], [4, 5, 6]])
 
-np.min(stats)
+# np.min(stats)
 
-np.max(stats, axis=1)
+# np.max(stats, axis=1)
 
-np.sum(stats, axis=0)
+# np.sum(stats, axis=0)
+
+
+# Reorganizing Arrays
+before = np.array([[1, 2, 3, 4], [5, 6, 7, 8]])
+print(before)
+
+after = before.reshape((2, 4))
+
+# Vertically stacking vectors
+v1 = np.array([1, 2, 3, 4])
+v2 = np.array([5, 6, 7, 8])
+
+np.vstack([v1, v2, v1, v2])
+
+# Horizontal  stack
+h1 = np.ones((2, 4))
+h2 = np.zeros((2, 2))
+
+np.hstack((h1, h2))
