@@ -21,3 +21,33 @@ import numpy as np
 
 # # Get total size
 # print(a.nbytes)
+
+
+# Accessing/Changing specific elements, rows, columns, etc
+
+a = np.array([[1, 2, 3, 4, 5, 6, 7], [8, 9, 10, 11, 12, 13, 14]])
+
+# Get a specific element [r, c]
+a[1, 5]
+
+# Get a specific row
+a[0, :]
+
+# Get a specific column
+a[:, 2]
+
+# Getting a little more fancy [startindex:endindex:stepsize]
+a[0, 1:-1:2]
+
+a[1, 5] = 20
+
+a[:, 2] = [1, 2]
+print(a)
+
+b = np.array([[[1, 2], [3, 4]], [[5, 6], [7, 8]]])
+
+# Get specific element (work outside in)
+b[0, 1, 1]
+
+# replace
+b[:, 1, :] = [[9, 9], [8, 8]]
