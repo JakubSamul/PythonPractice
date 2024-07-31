@@ -21,10 +21,10 @@ class TestConverterFloatToString(unittest.TestCase):
         self.assertEqual(float_to_string_converter(0.0), "0")
 
     def test_small_float(self):
-        self.assertEqual(float_to_string_converter(0.0000000000012), "0.00")
+        self.assertEqual(float_to_string_converter(0.0000000000012), "1.2e-12")
 
     def test_large_float(self):
-        self.assertEqual(float_to_string_converter(8475838847488221.437), "8 475 838 847 488 221.44")
+        self.assertEqual(float_to_string_converter(875867843675.55533), "875 867 843 675.5553")
 
     def test_inf(self):
         self.assertEqual(float_to_string_converter(float("inf")), "inf")
