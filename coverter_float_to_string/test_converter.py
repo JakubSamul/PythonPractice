@@ -26,6 +26,9 @@ class TestConverterFloatToString(unittest.TestCase):
     def test_large_float(self):
         self.assertEqual(float_to_string_converter(8475838847488221.437), "8 475 838 847 488 221.44")
 
+    def test_inf(self):
+        self.assertEqual(float_to_string_converter(float("inf")), "inf")
+
 
 if __name__ == "__main__":
     unittest.main()
