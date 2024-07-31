@@ -29,6 +29,9 @@ class TestConverterFloatToString(unittest.TestCase):
     def test_inf(self):
         self.assertEqual(float_to_string_converter(float("inf")), "inf")
 
+    def test_negative_inf(self):
+        self.assertEqual(float_to_string_converter(float("-inf")), "-inf")
+
 
 if __name__ == "__main__":
     unittest.main()
