@@ -20,6 +20,12 @@ class TestConverterFloatToString(unittest.TestCase):
     def test_zero(self):
         self.assertEqual(float_to_string_converter(0.0), "0")
 
+    def test_small_float(self):
+        self.assertEqual(float_to_string_converter(0.0000000000012), "0.00")
+
+    def test_large_float(self):
+        self.assertEqual(float_to_string_converter(8475838847488221.437), "8 475 838 847 488 221.44")
+
 
 if __name__ == "__main__":
     unittest.main()
