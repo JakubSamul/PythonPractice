@@ -10,3 +10,6 @@ def float_to_string_converter(value: float) -> str:
         return f"{int(value):,}".replace(",", " ")
     else:
         return f"{value:,}".replace(",", " ")
+
+
+print(float_to_string_converter(0.2 + 0.1))
