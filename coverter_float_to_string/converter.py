@@ -6,6 +6,8 @@ def float_to_string_converter(value: float) -> str:
     elif value != value:
         return "NaN"  # Not a number
 
+    value = round(value, 15)
+
     if value == int(value):
         return f"{int(value):,}".replace(",", " ")
     else:
