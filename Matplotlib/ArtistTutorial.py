@@ -49,11 +49,58 @@
 
 import matplotlib.lines as lines
 import matplotlib.pyplot as plt
+import numpy as np
 
-fig = plt.figure()
+# fig = plt.figure()
 
-l1 = lines.Line2D([0, 1], [0, 1], transform=fig.transFigure, figure=fig)
-l2 = lines.Line2D([0, 1], [1, 0], transform=fig.transFigure, figure=fig)
-fig.lines.extend([l1, l2])
+# l1 = lines.Line2D([0, 1], [0, 1], transform=fig.transFigure, figure=fig)
+# l2 = lines.Line2D([0, 1], [1, 0], transform=fig.transFigure, figure=fig)
+# fig.lines.extend([l1, l2])
+
+# plt.show()
+
+# fig, ax = plt.subplots()
+# axis = ax.xaxis
+# axis.get_ticklocs()
+# axis.get_ticklabels()
+# axis.get_ticklines()
+# axis.get_ticklabels(minor=True)
+# axis.get_ticklines(minor=True)
+
+# plt.figure creates a matplotlib.figure.Figure instance
+# fig = plt.figure()
+# rect = fig.patch  # a rectangle instance
+# rect.set_facecolor("lightgoldenrodyellow")
+
+# ax1 = fig.add_axes([0.1, 0.3, 0.4, 0.4])
+# rect = ax1.patch
+# rect.set_facecolor("lightslategray")
+
+
+# for label in ax1.xaxis.get_ticklabels():
+#     # label is a Text instance
+#     label.set_color("red")
+#     label.set_rotation(45)
+#     label.set_fontsize(16)
+
+# for line in ax1.yaxis.get_ticklines():
+#     # line is a Line2D instance
+#     line.set_color("green")
+#     line.set_markersize(25)
+#     line.set_markeredgewidth(3)
+
+# plt.show()
+
+
+# Fixing random state for reproducibility
+np.random.seed(19680801)
+
+fig, ax = plt.subplots()
+ax.plot(100 * np.random.rand(20))
+
+# Use automatic StrMethodFormatter
+ax.yaxis.set_major_formatter("${x:1.2f}")
+
+ax.yaxis.set_tick_params(which="major", labelcolor="green", labelleft=False, labelright=True)
 
 plt.show()
