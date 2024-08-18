@@ -64,5 +64,13 @@ import numpy as np
 # x_values = np.arange(0, 1000, 5)
 # print(x_values)
 
-x_values = np.linspace(0, 1000, 1001)
-print(x_values)
+# x_values = np.linspace(0, 1000, 1001)
+# print(x_values)
+
+
+# NaN and Infinity
+
+# print(np.nan)
+# print(np.inf)
+# print(np.isnan(np.sqrt(-1)))
+# print(np.isinf(np.array([10]) / 0))
