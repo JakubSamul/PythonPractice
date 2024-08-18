@@ -99,3 +99,14 @@ import numpy as np
 # a2 = np.array([[1], [2]])
 # print(a1 + a2)  # muszą być kompatybilne wymiary
 # wszystkie funkcje matematyczne są dostępne w numpy https://numpy.org/doc/stable/reference/routines.math.html
+
+
+# Array Methods
+
+# a = np.array([1, 2, 3, 4, 5])
+# a = np.append(a, [6, 7, 8])  # dodaje elementy na końcu
+# a = np.insert(a, 1, [2, 2, 2, 2])  # dodaje elementy na danej pozycji
+# print(a)
+# a = np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
+# print(np.delete(a, 0, 0))  # usuwa elementy z danej pozycji
+# print(np.delete(a, 1, 1))
