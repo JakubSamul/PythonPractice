@@ -74,3 +74,28 @@ import numpy as np
 # print(np.inf)
 # print(np.isnan(np.sqrt(-1)))
 # print(np.isinf(np.array([10]) / 0))
+
+
+# Mathemathical Operations
+
+# l1 = [1, 2, 3, 4, 5]
+# l2 = [6, 7, 8, 9, 0]
+# a1 = np.array(l1)
+# a2 = np.array(l2)
+# print(l1 * 5)
+# print(a1 * 5)
+# print(l1 + 5) # nie działa
+# print(a1 + 5)
+# print(l1 + l2)  # dodawanie list
+# print(a1 + a2) # dodawanie element po elemencie,
+#                # możemy to samo zrobić z innymi operacjami
+# a1 = np.array(
+#     [
+#         1,
+#         2,
+#         3,
+#     ]
+# )
+# a2 = np.array([[1], [2]])
+# print(a1 + a2)  # muszą być kompatybilne wymiary
+# wszystkie funkcje matematyczne są dostępne w numpy https://numpy.org/doc/stable/reference/routines.math.html
