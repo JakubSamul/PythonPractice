@@ -110,3 +110,49 @@ import numpy as np
 # a = np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
 # print(np.delete(a, 0, 0))  # usuwa elementy z danej pozycji
 # print(np.delete(a, 1, 1))
+
+
+#  Structuring Methods
+
+a = np.array(
+    [
+        [1, 2, 3, 4, 5],
+        [6, 7, 8, 9, 10],
+        [11, 12, 13, 14, 15],
+        [16, 17, 18, 19, 20],
+    ]
+)
+print(a.shape)
+# print(a.reshape(5, 4))  # zmienia wymiary
+# print(
+#     a.reshape(
+#         20,
+#     )
+# )
+# print(a.reshape(20, 1))
+# print(a.reshape(2, 10))
+# print(a.reshape(2, 2, 5))
+# print(a.reshape(2, 5, 2))
+# print(a.reshape(5, 2, 2))
+# print(a.reshape(2, 2, 1, 5, 1))
+# a.reshape(10, 2) # zmienia wymiary, ale nie zapisuje
+# print(a)
+# a.resize(10, 2) # zmienia wymiary i zapisuje
+# print(a)
+# print(
+#     a.flatten()
+# )  # spłaszcza tablicę ale nie zmienia tego w orginalnej tablicy
+# print(a.ravel())  # spłaszcza tablicę i zmienia to w orginalnej tablicy
+# var1 = a.flatten()
+# var1[2] = 100
+# print(var1)
+# print(a)
+# var2 = a.ravel()
+# var2[2] = 200
+# print(var1)
+# print(a)
+# var = [v for v in a.flat]
+# print(var)  # zwraca iterator, który można przekonwertować na listę
+# print(a.transpose())  # transponuje tablicę
+# print(a.T)  # to samo co wyżej
+# print(a.swapaxes(0, 1))  # zamienia osie
