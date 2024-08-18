@@ -45,3 +45,24 @@ import numpy as np
 # a = np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]], dtype="<U7")
 # print(a.dtype)
 # print(type(a[1][0]))
+
+
+# Filling Arrays
+
+# a = np.full((3, 3, 3), 7)
+# print(a)
+
+# a = np.zeros((3, 3, 3))
+# print(a)
+
+# a = np.ones((3, 3, 3))
+# print(a)
+
+# a = np.empty((3, 3, 3))
+# print(a)
+
+# x_values = np.arange(0, 1000, 5)
+# print(x_values)
+
+x_values = np.linspace(0, 1000, 1001)
+print(x_values)
