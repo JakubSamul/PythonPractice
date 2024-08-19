@@ -225,3 +225,15 @@ import numpy as np
 # numbers = np.random.choice([1, 2, 3, 4, 5], size=(5, 10))
 # Generuje tablicę 2D z losowymi liczbami z podanej listy
 # print(numbers)
+
+
+# Exporting & Importing
+
+# a = np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
+# np.save("array.npy", a)  # zapisuje tablicę do pliku
+# a = np.load("array.npy")  # wczytuje tablicę z pliku
+# print(a)
+# a = np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
+# np.savetxt("array.csv", a, delimiter=",")  # zapisuje tablicę do pliku
+# a = np.loadtxt("array.csv", delimiter=",")  # wczytuje tablicę z pliku
+# print(a)
