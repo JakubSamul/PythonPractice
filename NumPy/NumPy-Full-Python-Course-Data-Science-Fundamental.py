@@ -208,3 +208,20 @@ import numpy as np
 # print(a.mean())
 # print(a.std())
 # print(np.median(a))
+
+
+# Numpy Random
+
+# number = np.random.randint(100) # losowa liczba całkowita z zakresu 0-100
+# print(number)
+# numbers = np.random.randint(100, size=(2, 3, 4))
+# # Generuje tablicę 3D z losowymi liczbami całkowitymi z zakresu 0-100
+# numbers = np.random.randint(70, 100, size=(2, 3, 4))
+# # Generuje tablicę 3D z losowymi liczbami całkowitymi z zakresu 70-100
+# numbers = np.random.binomial(10, p=0.5, size=(5, 10))
+# Generuje tablicę 2D z losowymi liczbami całkowitymi z rozkładu binomialnego
+# numbers = np.random.normal(loc=170, scale=15, size=(5, 10))
+# Generuje tablicę 2D z losowymi liczbami z rozkładu normalnego
+# numbers = np.random.choice([1, 2, 3, 4, 5], size=(5, 10))
+# Generuje tablicę 2D z losowymi liczbami z podanej listy
+# print(numbers)
