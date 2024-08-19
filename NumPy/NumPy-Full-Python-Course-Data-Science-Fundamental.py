@@ -181,12 +181,30 @@ import numpy as np
 # )
 # print(np.split(a, 2, axis=0))  # dzieli tablicę na dwie części
 # print(np.split(a, 5, axis=1))  # dzieli tablicę na pięć części
-a = np.array(
-    [
-        [1, 2, 3, 4, 5, 6],
-        [6, 7, 8, 9, 10, 11],
-        [11, 12, 13, 14, 15, 16],
-        [16, 17, 18, 19, 20, 21],
-    ]
-)
-print(np.split(a, 2, axis=1))  # dzieli tablicę na dwie części
+# a = np.array(
+#     [
+#         [1, 2, 3, 4, 5, 6],
+#         [6, 7, 8, 9, 10, 11],
+#         [11, 12, 13, 14, 15, 16],
+#         [16, 17, 18, 19, 20, 21],
+#     ]
+# )
+# print(np.split(a, 2, axis=1))  # dzieli tablicę na dwie części
+
+
+# Agregate Functions
+
+# a = np.array(
+#     [
+#         [1, 2, 3, 4, 5, 6],
+#         [7, 8, 9, 10, 11, 12],
+#         [13, 14, 15, 16, 17, 18],
+#         [19, 20, 21, 22, 23, 24],
+#     ]
+# )
+# print(a.min())
+# print(a.max())
+# print(a.sum())
+# print(a.mean())
+# print(a.std())
+# print(np.median(a))
