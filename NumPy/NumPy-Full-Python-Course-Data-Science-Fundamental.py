@@ -98,7 +98,8 @@ import numpy as np
 # )
 # a2 = np.array([[1], [2]])
 # print(a1 + a2)  # muszą być kompatybilne wymiary
-# wszystkie funkcje matematyczne są dostępne w numpy https://numpy.org/doc/stable/reference/routines.math.html
+# wszystkie funkcje matematyczne są dostępne w numpy
+# https://numpy.org/doc/stable/reference/routines.math.html
 
 
 # Array Methods
@@ -114,15 +115,15 @@ import numpy as np
 
 #  Structuring Methods
 
-a = np.array(
-    [
-        [1, 2, 3, 4, 5],
-        [6, 7, 8, 9, 10],
-        [11, 12, 13, 14, 15],
-        [16, 17, 18, 19, 20],
-    ]
-)
-print(a.shape)
+# a = np.array(
+#     [
+#         [1, 2, 3, 4, 5],
+#         [6, 7, 8, 9, 10],
+#         [11, 12, 13, 14, 15],
+#         [16, 17, 18, 19, 20],
+#     ]
+# )
+# print(a.shape)
 # print(a.reshape(5, 4))  # zmienia wymiary
 # print(
 #     a.reshape(
@@ -156,3 +157,36 @@ print(a.shape)
 # print(a.transpose())  # transponuje tablicę
 # print(a.T)  # to samo co wyżej
 # print(a.swapaxes(0, 1))  # zamienia osie
+
+
+# Concatenating, Stacking, Splitting
+
+# a1 = np.array([[1, 2, 3, 4, 5], [6, 7, 8, 9, 10]])
+# a2 = np.array([[11, 12, 13, 14, 15], [16, 17, 18, 19, 20]])
+# a = np.concatenate((a1, a2), axis=0)
+#              # łączy tablice jedna pod drugą, to samo co np.vstack
+# print(a)
+# a = np.concatenate((a1, a2), axis=1)
+#              # łączy tablice jedna obok drugiej, to samo co np.hstack
+# print(a)
+# a = np.stack((a1, a2))  # łączy tablice w nową tablicę
+# print(a)
+# a = np.array(
+#     [
+#         [1, 2, 3, 4, 5],
+#         [6, 7, 8, 9, 10],
+#         [11, 12, 13, 14, 15],
+#         [16, 17, 18, 19, 20],
+#     ]
+# )
+# print(np.split(a, 2, axis=0))  # dzieli tablicę na dwie części
+# print(np.split(a, 5, axis=1))  # dzieli tablicę na pięć części
+a = np.array(
+    [
+        [1, 2, 3, 4, 5, 6],
+        [6, 7, 8, 9, 10, 11],
+        [11, 12, 13, 14, 15, 16],
+        [16, 17, 18, 19, 20, 21],
+    ]
+)
+print(np.split(a, 2, axis=1))  # dzieli tablicę na dwie części
